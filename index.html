@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Basic Resume Builder</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1, h2 {
+            text-align: center;
+            color: #333;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+        }
+        .form-group button {
+            width: 100%;
+            padding: 10px;
+            background-color: #28a745;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+        .form-group button:hover {
+            background-color: #218838;
+        }
+        #preview {
+            padding: 20px;
+            border: 1px solid #ddd;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Basic Resume Builder</h1>
+
+        <!-- User Registration/Login Form -->
+        <div id="user-auth">
+            <h2>User Registration/Login</h2>
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" required>
+            </div>
+            <div class="form-group">
+                <button onclick="registerOrLogin()">Register/Login</button>
+            </div>
+        </div>
+
+        <!-- Profile Management Form -->
+        <div id="profile-management" style="display:none;">
+            <h2>Profile Management</h2>
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" id="name">
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email">
+            </div>
+            <div class="form-group">
+                <label for="phone">Phone</label>
+                <input type="text" id="phone">
+            </div>
+            <div class="form-group">
+                <label for="address">Address</label>
+                <input type="text" id="address">
+            </div>
+            <div class="form-group">
+                <label for="template">Select Template</label>
+                <select id="template" onchange="updatePreview()">
+                    <option value="template1">Template 1</option>
+                    <option value="template2">Template 2</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <button onclick="updateProfile()">Update Profile</button>
+            </div>
+        </div>
+
+        <!-- Real-time Preview -->
+        <div id="preview">
+            <h2>Resume Preview</h2>
+            <div id="resume-content">
+                <!-- Resume content will be dynamically updated here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let isAuthenticated = false;
+
+        function registerOrLogin() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            if (username && password) {
+                isAuthenticated = true;
+                document.getElementById('user-auth').style.display = 'none';
+                document.getElementById('profile-management').style.display = 'block';
+            } else {
+                alert('Please enter both username and password.');
+            }
+        }
+
+        function updateProfile() {
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+            const address = document.getElementById('address').value;
+            const template = document.getElementById('template').value;
+
+            if (name && email && phone && address) {
+                const resumeContent = `
+                    <h3>${name}</h3>
+                    <p>Email: ${email}</p>
+                    <p>Phone: ${phone}</p>
+                    <p>Address: ${address}</p>
+                `;
+
+                if (template === 'template1') {
+                    document.getElementById('resume-content').innerHTML = `<div style="border: 2px solid #000; padding: 10px;">${resumeContent}</div>`;
+                } else {
+                    document.getElementById('resume-content').innerHTML = `<div style="border: 2px dashed #000; padding: 10px;">${resumeContent}</div>`;
+                }
+            } else {
+                alert('Please complete all profile fields.');
+            }
+        }
+
+        function updatePreview() {
+            updateProfile();
+        }
+    </script>
+</body>
+</html>
